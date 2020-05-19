@@ -8,6 +8,7 @@ let expressJwt = require('express-jwt')
 // Instantiate app
 let app = express()
 let rowdyResults = rowdyLogger.begin(app)
+//let bodyParser = require('body-parser')
 
 // Set up middleware
 app.use(morgan('dev'))
@@ -19,6 +20,8 @@ app.use(cors())//cors middleware for securing the app routes to logged in users
 // Routes
 app.use('/auth', require('./controllers/auth'))
 app.use('/profile', expressJwt({secret: process.env.JWT_SECRET}), require('./controllers/profile'))
+app.use('/list', expressJwt({secret: process.env.JWT_SECRET}), require('./controllers/list'))
+app.use('/sale', expressJwt({secret: process.env.JWT_SECRET}), require('./controllers/sale'))
 
 app.get('*', (req, res) => {
   res.status(404).send({ message: 'Not Found' })
