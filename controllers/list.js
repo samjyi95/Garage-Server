@@ -6,8 +6,8 @@ let jwt = require('jsonwebtoken')
 router.get('/', (req,res) => {
 	db.List.find({ user: req.user._id})
 	.populate('user')
-	.then(currentList => {
-		res.send({currentList})
+	.then(currentLists => {
+		res.send({currentLists})
 	})
 	.catch(err => {
 		console.log('Error', err)
@@ -54,8 +54,9 @@ router.delete('/:id', (req, res) => {
 
 //POST route to add items to a created list
 router.post('/item', (req, res) => {
+	console.log(req.body, req.user._id)
 	db.List.findOneAndUpdate({
-		user: req.user,
+		user: req.user._id,
 		listTitle: req.body.listTitle},
 		{ $push: { item: {
 			name: req.body.name,
