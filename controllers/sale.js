@@ -8,14 +8,15 @@ router.get('/', (req, res) => {
 	.populate('user')
 	.populate('list')
 	.then((currentSales) => {
-		res.send({message: 'List of All Sales', status: '200'}, {currentSales} )
+		res.send({currentSales})
 	})
 	.catch(err => {
 		console.log('Error', err)
 	})
 })
 
-//creates a sale event 
+//creates a sale event
+//req.body.list requires the list _id 
 router.post('/', (req, res) => {
 	db.Sale.create({
 		user: req.user,
@@ -23,7 +24,6 @@ router.post('/', (req, res) => {
 		date: req.body.date,
 		list: req.body.list
 	})
-	
 	.then(() => {
 		res.send({ message: "Successfully Created a Sale", status: '200'})
 	})
