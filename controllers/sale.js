@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
 		date: req.body.date,
 		list: req.body.list
 	})
-	.populate('list')
+	
 	.then(() => {
 		res.send({ message: "Successfully Created a Sale", status: '200'})
 	})
